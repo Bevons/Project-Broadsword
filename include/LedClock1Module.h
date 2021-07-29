@@ -23,7 +23,7 @@ private:
   const uint8_t  DIGIT_3_PIN    = 26;
   const uint8_t  DIGIT_4_PIN    = 27;
 
-  // -- Symbol to pin values conversion table --
+  // -- Symbol to pin values conversion table ----
   const uint8_t  SYMBOL_TO_BITSET[12] = {
     0b00000011,                           // 0
     0b10011111,                           // 1
