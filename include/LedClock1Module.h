@@ -7,7 +7,7 @@ class LedClock1Module : public Module {
 private:
   const int      REFRESH_RATE = 3;
   const uint8_t  DIGIT_OFF = 11;
-  const char     DASH_START = 10;
+  const char     DIGIT_DASH = 10;
 
   // -- Pin definitions ---------------------------
   const uint8_t  SEGMENT_A_PIN  = 32;
@@ -23,7 +23,7 @@ private:
   const uint8_t  DIGIT_3_PIN    = 26;
   const uint8_t  DIGIT_4_PIN    = 27;
 
-  // -- Symbol to pin values conversion table ----
+  // -- Symbol to pin values conversion table -----
   const uint8_t  SYMBOL_TO_BITSET[12] = {
     0b00000011,                           // 0
     0b10011111,                           // 1
@@ -68,7 +68,7 @@ private:
 
 public:
   LedClock1Module();
-  
+  virtual void tick_100mS( uint8_t phase );
   virtual ~LedClock1Module();
   // Module identification
   virtual const char*   getId()    { return CLOCK1_MODULE; }
