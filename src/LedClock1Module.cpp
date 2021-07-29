@@ -35,7 +35,7 @@ LedClock1Module::LedClock1Module() {
     if( strcmp( event.module->getId(), RTC_MODULE ) == 0 ) {      
       String datetime = event.payload;
       int i = datetime.indexOf( 'T' );
-      ///
+      /////////////////////////////////////////////////////////////////////////////
       displayBuffer[0] = digitToSymbol(datetime.charAt(i + 1));
       displayBuffer[1] = digitToSymbol(datetime.charAt(i + 2));
       displayBuffer[2] = digitToSymbol(datetime.charAt(i + 4));
