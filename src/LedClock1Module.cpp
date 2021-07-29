@@ -91,7 +91,7 @@ void LedClock1Module::showSymbol( uint8_t symbol, uint8_t position ) {
       case 2:
         break;
       default:
-        symbol = DIGIT_OFF;
+        symbol = DASH_START;
     }
   }
 
