@@ -23,11 +23,10 @@ LedClock1Module::LedClock1Module() {
 
   clearDisplay();
 
-
-  displayBuffer[0] = 1;
-  displayBuffer[1] = 1;
-  displayBuffer[2] = 1;
-  displayBuffer[3] = 1;
+  displayBuffer[0] = DASH_START;
+  displayBuffer[1] = DASH_START;
+  displayBuffer[2] = DASH_START;
+  displayBuffer[3] = DASH_START;
   showDots = true;
 
   ticker.attach_ms( REFRESH_RATE, ticker_callback, this );
@@ -36,7 +35,7 @@ LedClock1Module::LedClock1Module() {
     if( strcmp( event.module->getId(), RTC_MODULE ) == 0 ) {      
       String datetime = event.payload;
       int i = datetime.indexOf( 'T' );
-      displayBuffer[0] = digitToSymbol(datetime.charAt(i + 1)); // getRealTimeDigit(1,datetime,i);
+      displayBuffer[0] = digitToSymbol(datetime.charAt(i + 1));
       displayBuffer[1] = digitToSymbol(datetime.charAt(i + 2));
       displayBuffer[2] = digitToSymbol(datetime.charAt(i + 4));
       displayBuffer[3] = digitToSymbol(datetime.charAt(i + 5));
@@ -44,11 +43,19 @@ LedClock1Module::LedClock1Module() {
   });
 }
 
-char LedClock1Module::digitToSymbol( unsigned char digit ){
-  if( digit >= 48 && digit <= 57 ) {
+char LedClock1Module::digitToSymbol( unsigned char digit )
+{
+  if( digit >= '1' && digit <= '9' ) 
+  {
     return digit - 48;
-  }else{
+  }
+  else if(digit == '-')
+  {
     return 10;
+  }
+  else
+  {
+    return 11;
   }
 };
 
