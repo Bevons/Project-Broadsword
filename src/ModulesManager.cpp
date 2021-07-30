@@ -11,6 +11,7 @@
 #include "Utils.h"
 #include "WebServerModule.h"
 #include "WifiModule.h"
+#include "InfraredTransmitter.h"
 
 #ifdef USE_AM312_MODULE
   #include "AM312Module.h"
@@ -26,6 +27,9 @@
 #endif
 #ifdef USE_CLOCK1_MODULE
   #include "LedClock1Module.h"
+#endif
+#ifdef USE_INFRARED_TRANSMITTER
+  #include "InfraredTransmitter.h"
 #endif
 #ifdef USE_MINI_DISPLAY_MODULE
   #include "minidisplay/MiniDisplayModule.h"
@@ -151,6 +155,9 @@ Module* ModulesManager::create( const String& module ) {
   #endif
   #ifdef USE_CLOCK1_MODULE
     CASE( CLOCK1_MODULE ):            return new LedClock1Module();
+  #endif
+  #ifdef USE_INFRARED_TRANSMITTER
+    CASE( INFRARED_TRANSMITTER ):     return new InfraredModule();
   #endif
   #ifdef USE_MINI_DISPLAY_MODULE
     CASE( MINI_DISPLAY_MODULE ):      return new MiniDisplayModule();

@@ -8,6 +8,7 @@ namespace Messages {
   constexpr const char* TITLE_RTC_MODULE              = "Real-time clock";
   constexpr const char* TITLE_WEBSERVER_MODULE        = "Web server";
   constexpr const char* TITLE_WIFI_MODULE             = "WiFi client";
+  constexpr const char* TITLE_INFRARED_TRANSMITTER    = "Infrared module status";
 
   constexpr const char* TITLE_AM312_MODULE            = "AM312 pyroelectic sensor";
   constexpr const char* TITLE_BACKLIGHT_MODULE        = "WS8212B LED strip";
@@ -20,7 +21,7 @@ namespace Messages {
   constexpr const char* TITLE_RELAYS_MODULE           = "Relays (x8) shield";
   constexpr const char* TITLE_ST7796_MODULE           = "ST7796 display";
   constexpr const char* TITLE_STATUS_LED_MODULE       = "Status LED";
-
+  
   constexpr const char* AM_312_MOTION                 = "Motion: %s";
   constexpr const char* BME1750_LUX                   = "Lux: %s";
   constexpr const char* BME280_TEMPERATURE            = "Temperature: %s%s";

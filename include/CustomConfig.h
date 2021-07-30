@@ -15,6 +15,9 @@
 // Includes the 7-segment LED alarm clock module into the project.
 #define USE_CLOCK1_MODULE
 
+// Includes the Infrared transmitter into the project.
+#define USE_INFRARED_TRANSMITTER
+
 // Includes the Mini display module, based on the SSD1306 I2C OLED display, into the project.
 #define USE_MINI_DISPLAY_MODULE
 

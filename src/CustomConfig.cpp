@@ -32,6 +32,11 @@ void customSetup() {
       Modules.add( CLOCK1_MODULE );
     }
   #endif
+  #ifdef USE_INFRARED_TRANSMITTER
+    if( Options::getByte( CORE_MODULE, INFRARED_TRANSMITTER )) {
+      Modules.add( INFRARED_TRANSMITTER );
+    }
+  #endif
   #ifdef USE_MINI_DISPLAY_MODULE
     if( Options::getByte( CORE_MODULE, MINI_DISPLAY_MODULE )) {
       Modules.add( MINI_DISPLAY_MODULE );
