@@ -17,11 +17,11 @@ constexpr const char* BH1750_MODULE             = "bh1750";
 constexpr const char* BME280_MODULE             = "bme280";
 constexpr const char* CLOCK1_MODULE             = "clock1";
 constexpr const char* MINI_DISPLAY_MODULE       = "display";
+constexpr const char* NEOCLIMA_MODULE           = "neoclima";
 constexpr const char* OPEN_WEATHER_MAP_MODULE   = "weather";
 constexpr const char* RELAYS_MODULE             = "relays";
 constexpr const char* ST7796_MODULE             = "st7796";
 constexpr const char* STATUS_LED_MODULE         = "led";
-constexpr const char* INFRARED_TRANSMITTER      = "infrared";
 
 // Warning!
 // MODULE_IDS and MODULE_NAMES arrays must be respectively related to each other.
@@ -60,11 +60,11 @@ static constexpr const char* const CUSTOM_MODULE_IDS[] = {
   #ifdef USE_CLOCK1_MODULE
     CLOCK1_MODULE,
   #endif
-  #ifdef USE_INFRARED_TRANSMITTER
-    INFRARED_TRANSMITTER,
-  #endif
   #ifdef USE_MINI_DISPLAY_MODULE
     MINI_DISPLAY_MODULE,
+  #endif
+  #ifdef USE_NEOCLIMA_MODULE
+    NEOCLIMA_MODULE,
   #endif
   #ifdef USE_OPEN_WEATHER_MAP_MODULE
     OPEN_WEATHER_MAP_MODULE,
@@ -96,11 +96,11 @@ static constexpr const char* const CUSTOM_MODULE_NAMES[] = {
   #ifdef USE_CLOCK1_MODULE
     Messages::TITLE_CLOCK1_MODULE,
   #endif
-  #ifdef USE_INFRARED_TRANSMITTER
-    Messages::TITLE_INFRARED_TRANSMITTER,
-  #endif
   #ifdef USE_MINI_DISPLAY_MODULE
     Messages::TITLE_MINI_DISPLAY_MODULE,
+  #endif
+  #ifdef USE_NEOCLIMA_MODULE
+    Messages::TITLE_NEOCLIMA_MODULE,
   #endif
   #ifdef USE_OPEN_WEATHER_MAP_MODULE
     Messages::TITLE_OPEN_WEATHER_MAP_MODULE,

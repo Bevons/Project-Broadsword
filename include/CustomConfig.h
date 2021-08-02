@@ -15,11 +15,11 @@
 // Includes the 7-segment LED alarm clock module into the project.
 #define USE_CLOCK1_MODULE
 
-// Includes the Infrared transmitter into the project.
-#define USE_INFRARED_TRANSMITTER
-
 // Includes the Mini display module, based on the SSD1306 I2C OLED display, into the project.
 #define USE_MINI_DISPLAY_MODULE
+
+// Includes a module for Neoclima fan.
+#define USE_NEOCLIMA_MODULE
 
 // Includes the OpenWeatherMap module into the project.
 #define USE_OPEN_WEATHER_MAP_MODULE

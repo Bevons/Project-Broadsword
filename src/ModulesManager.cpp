@@ -11,7 +11,6 @@
 #include "Utils.h"
 #include "WebServerModule.h"
 #include "WifiModule.h"
-#include "InfraredTransmitter.h"
 
 #ifdef USE_AM312_MODULE
   #include "AM312Module.h"
@@ -28,11 +27,11 @@
 #ifdef USE_CLOCK1_MODULE
   #include "LedClock1Module.h"
 #endif
-#ifdef USE_INFRARED_TRANSMITTER
-  #include "InfraredTransmitter.h"
-#endif
 #ifdef USE_MINI_DISPLAY_MODULE
   #include "minidisplay/MiniDisplayModule.h"
+#endif
+#ifdef USE_NEOCLIMA_MODULE
+  #include "infrared/IrNeoclima.h"
 #endif
 #ifdef USE_OPEN_WEATHER_MAP_MODULE
   #include "OpenWeatherMapModule.h"
@@ -156,11 +155,11 @@ Module* ModulesManager::create( const String& module ) {
   #ifdef USE_CLOCK1_MODULE
     CASE( CLOCK1_MODULE ):            return new LedClock1Module();
   #endif
-  #ifdef USE_INFRARED_TRANSMITTER
-    CASE( INFRARED_TRANSMITTER ):     return new InfraredModule();
-  #endif
   #ifdef USE_MINI_DISPLAY_MODULE
     CASE( MINI_DISPLAY_MODULE ):      return new MiniDisplayModule();
+  #endif
+  #ifdef USE_NEOCLIMA_MODULE
+    CASE( NEOCLIMA_MODULE ):          return new IrNeoclima();
   #endif
   #ifdef USE_OPEN_WEATHER_MAP_MODULE
     CASE( OPEN_WEATHER_MAP_MODULE ):  return new OpenWeatherMapModule();
