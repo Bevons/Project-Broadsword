@@ -12,6 +12,8 @@ class IrNeoclima : public Module {
         // Module identification
         virtual const char*   getId()    { return NEOCLIMA_MODULE; }
         virtual const char*   getName()  { return Messages::TITLE_NEOCLIMA_MODULE; }
+        virtual const String  getModuleWebpage();
+        virtual void             resolveTemplateKey( const String& key, String& out );
     protected:
         virtual bool          handleCommand( const String& cmd, const String& args );
   };

@@ -33,6 +33,9 @@
 #ifdef USE_NEOCLIMA_MODULE
   #include "infrared/IrNeoclima.h"
 #endif
+#ifdef USE_LG_MODULE
+  #include "infrared/IrLg.h"
+#endif
 #ifdef USE_OPEN_WEATHER_MAP_MODULE
   #include "OpenWeatherMapModule.h"
 #endif
@@ -160,6 +163,9 @@ Module* ModulesManager::create( const String& module ) {
   #endif
   #ifdef USE_NEOCLIMA_MODULE
     CASE( NEOCLIMA_MODULE ):          return new IrNeoclima();
+  #endif
+  #ifdef USE_LG_MODULE
+    CASE( LG_MODULE ):                return new IrLg();
   #endif
   #ifdef USE_OPEN_WEATHER_MAP_MODULE
     CASE( OPEN_WEATHER_MAP_MODULE ):  return new OpenWeatherMapModule();

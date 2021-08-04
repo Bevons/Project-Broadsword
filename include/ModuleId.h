@@ -18,6 +18,7 @@ constexpr const char* BME280_MODULE             = "bme280";
 constexpr const char* CLOCK1_MODULE             = "clock1";
 constexpr const char* MINI_DISPLAY_MODULE       = "display";
 constexpr const char* NEOCLIMA_MODULE           = "neoclima";
+constexpr const char* LG_MODULE                 = "lg";
 constexpr const char* OPEN_WEATHER_MAP_MODULE   = "weather";
 constexpr const char* RELAYS_MODULE             = "relays";
 constexpr const char* ST7796_MODULE             = "st7796";
@@ -66,6 +67,9 @@ static constexpr const char* const CUSTOM_MODULE_IDS[] = {
   #ifdef USE_NEOCLIMA_MODULE
     NEOCLIMA_MODULE,
   #endif
+  #ifdef USE_LG_MODULE
+    LG_MODULE,
+  #endif
   #ifdef USE_OPEN_WEATHER_MAP_MODULE
     OPEN_WEATHER_MAP_MODULE,
   #endif
@@ -101,6 +105,9 @@ static constexpr const char* const CUSTOM_MODULE_NAMES[] = {
   #endif
   #ifdef USE_NEOCLIMA_MODULE
     Messages::TITLE_NEOCLIMA_MODULE,
+  #endif
+  #ifdef USE_LG_MODULE
+    Messages::TITLE_LG_MODULE,
   #endif
   #ifdef USE_OPEN_WEATHER_MAP_MODULE
     Messages::TITLE_OPEN_WEATHER_MAP_MODULE,

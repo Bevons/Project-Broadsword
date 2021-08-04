@@ -18,8 +18,11 @@
 // Includes the Mini display module, based on the SSD1306 I2C OLED display, into the project.
 #define USE_MINI_DISPLAY_MODULE
 
-// Includes a module for Neoclima fan.
+// Includes a module for Neoclima A/C.
 #define USE_NEOCLIMA_MODULE
+
+// Includes the module for LG A/C.
+#define USE_LG_MODULE
 
 // Includes the OpenWeatherMap module into the project.
 #define USE_OPEN_WEATHER_MAP_MODULE

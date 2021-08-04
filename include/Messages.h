@@ -16,6 +16,7 @@ namespace Messages {
   constexpr const char* TITLE_CLOCK1_MODULE           = "LED alarm clock";
   constexpr const char* TITLE_MINI_DISPLAY_MODULE     = "SSD1306 LCD display";
   constexpr const char* TITLE_NEOCLIMA_MODULE         = "Neoclima A/C";
+  constexpr const char* TITLE_LG_MODULE               = "LG A/C";        
   constexpr const char* TITLE_OPEN_WEATHER_MAP_MODULE = "OpenWeatherMap";
   constexpr const char* TITLE_RELAYS_MODULE           = "Relays (x8) shield";
   constexpr const char* TITLE_ST7796_MODULE           = "ST7796 display";

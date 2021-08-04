@@ -42,6 +42,11 @@ void customSetup() {
       Modules.add( NEOCLIMA_MODULE );
     }
   #endif
+  #ifdef USE_LG_MODULE
+    if( Options::getByte( CORE_MODULE, LG_MODULE )) {
+      Modules.add( LG_MODULE );
+    }
+  #endif
   #ifdef USE_OPEN_WEATHER_MAP_MODULE
     if( Options::getByte( CORE_MODULE, OPEN_WEATHER_MAP_MODULE )) {
       Modules.add( OPEN_WEATHER_MAP_MODULE );

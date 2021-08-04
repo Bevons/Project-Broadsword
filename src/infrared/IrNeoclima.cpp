@@ -8,10 +8,12 @@
 #include <IRsend.h>
 #include "infrared/IrNeoclima.h"
 #include "str_switch.h"
+#include "Utils.h"
 
 IrNeoclima::IrNeoclima() {
-    pinMode( TRANSMITTER_PIN, OUTPUT );
-    airConditional = new IRNeoclimaAc( TRANSMITTER_PIN, true );
+   // pinMode( TRANSMITTER_PIN, OUTPUT );
+    properties.has_module_webpage = true;
+    airConditional = new IRNeoclimaAc( TRANSMITTER_PIN );
     airConditional->begin();
 
 //    Log.notice( "Default state" CR );
@@ -23,65 +25,89 @@ IrNeoclima::~IrNeoclima(){
     delete airConditional;
 };
 
+const String IrNeoclima::getModuleWebpage() {
+  return makeWebpage( "/module_ir_ac.html" );
+}
+
 bool IrNeoclima::handleCommand( const String& cmd, const String& args ){
      SWITCH( cmd.c_str() ) {
-     // ==========================================
-        CASE( "fanon" ): {
-            airConditional->on();
-            for( int i = 0; i < 100; i++ ) {
-                airConditional->setFan(kNeoclimaFanMed);
+    // ==========================================
+        CASE( "fan" ): {
+            SWITCH( args.c_str() ){
+                CASE( "on" ): {
+                    airConditional->on();
+                    airConditional->send();
+                    handleCommandResults( cmd, args, Messages::OK );
+                    return true;
+                }
+                CASE( "off" ): {
+                    airConditional->off();
+                    airConditional->send();
+                    handleCommandResults( cmd, args, Messages::OK );
+                    return true;
+                }
+                CASE( "low" ): {
+                    airConditional->setFan(kNeoclimaFanLow);
+                    airConditional->send();
+                    handleCommandResults( cmd, args, Messages::OK );
+                    return true;
+                }
+                CASE( "med" ): {
+                    airConditional->setFan(kNeoclimaFanMed);
+                    airConditional->send();
+                    handleCommandResults( cmd, args, Messages::OK );
+                    return true;
+                }
+                CASE( "high" ): {
+                    airConditional->setFan(kNeoclimaFanHigh);
+                    airConditional->send();
+                    handleCommandResults( cmd, args, Messages::OK );
+                    return true;
+                }
             }
-            handleCommandResults( cmd, args, Messages::OK );
-            return true;
         }
-        CASE( "fanoff" ): {
-            airConditional->off();
-            handleCommandResults( cmd, args, Messages::OK );
+        CASE( "mode" ): {
+            SWITCH( args.c_str() ){
+                CASE( "cool" ): {
+                    airConditional->setMode( kNeoclimaCool );
+                    airConditional->send();
+                    handleCommandResults( cmd, args, Messages::OK );
+                    return true; 
+                }
+                CASE( "heat" ):{
+                    airConditional->setMode( kNeoclimaHeat );
+                    airConditional->send();
+                    handleCommandResults( cmd, args, Messages::OK );
+                    return true;
+                }
+            }
+        }
+        CASE( "temp" ): {
+            uint8_t number = Utils::toByte( args.c_str() );
+            if( number <= 15 || number >= 30 ) {
+                handleCommandResults( cmd, args, Messages::COMMAND_INVALID_VALUE );
+            } else {
+                airConditional->setTemp(number);
+                airConditional->send();
+                handleCommandResults( cmd, args, Messages::OK );
+            }
             return true;
         }
         DEFAULT_CASE:
             return false;
-        /*
-        CASE( "IrNeoclima fan swing on" ): {
-            airConditional->setSwing(true);
-        }
-        CASE( "IrNeoclima fan swing off" ): {
-            airConditional->setSwing(false));
-        }
-        CASE( "irneoclim fan low" ): {
-            airConditional->setFan(kNeoclimaFanLow);
-        }
-        CASE( "irneoclim fan med" ): {
-            airConditional->setFan(kNeoclimaFanMed);
-        }
-        CASE( "irneoclim fan high" ): {
-            airConditional->setFan(kNeoclimaFanHigh);
-        }
-        CASE( "irneoclim fan cool" ): {
-            airConditional->setMode(kNeoclimaCool);
-        }
-        CASE( "irneoclim fan dry" ): {
-            airConditional->setMode(kNeoclimaDry);
-        }
-        CASE( "irneoclim temp auto" ): {
-            airConditional->setFan(kNeoclimaFanAuto);
-        }
-        CASE( "irneoclim temp maxC" ): {
-            airConditional->setTemp(kNeoclimaMaxTempC);
-        }
-        CASE( "irneoclim temp maxF" ): {
-            airConditional->setTemp(kNeoclimaMaxTempF);
-        }
-        CASE( "irneoclim temp minC" ): {
-            airConditional->setTemp(kNeoclimaMinTempC);
-        }
-        CASE( "irneoclim temp maxF" ): {
-            airConditional->setTemp(kNeoclimaMinTempF);
-        }
-        CASE( "irneoclim temp 30" ): {
-            airConditional->setTemp(30);
-        }
-        */
      }
     // ==========================================
+}
+
+
+void IrNeoclima::resolveTemplateKey( const String& key, String& out ) {
+  SWITCH( key.c_str() ) {
+    // Module template parameters
+    CASE( "MTITLE" ):  {
+        out += Utils::formatModuleSettingsTitle( getId(), getName() );  break;
+    }  
+    CASE( "PIN_NUM" ): {
+        out += TRANSMITTER_PIN; break;
+    } 
+  }
 }
