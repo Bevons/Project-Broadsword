@@ -22,7 +22,7 @@
 #define USE_NEOCLIMA_MODULE
 
 // Includes the module for LG A/C.
-#define USE_LG_MODULE
+//#define USE_LG_MODULE
 
 // Includes the OpenWeatherMap module into the project.
 #define USE_OPEN_WEATHER_MAP_MODULE

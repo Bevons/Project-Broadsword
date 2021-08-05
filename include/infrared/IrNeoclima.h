@@ -4,8 +4,9 @@
 
 class IrNeoclima : public Module {
     private:
-        const uint8_t TRANSMITTER_PIN = LED_BUILTIN;
-        IRNeoclimaAc* airConditional;
+        const uint8_t                       TRANSMITTER_PIN = LED_BUILTIN;
+        static constexpr const char* const  PIN_OPTION_KEY  = "Pin";
+        IRNeoclimaAc*                       airConditional;
     public:
         IrNeoclima();
         virtual ~IrNeoclima();
@@ -13,7 +14,9 @@ class IrNeoclima : public Module {
         virtual const char*   getId()    { return NEOCLIMA_MODULE; }
         virtual const char*   getName()  { return Messages::TITLE_NEOCLIMA_MODULE; }
         virtual const String  getModuleWebpage();
-        virtual void             resolveTemplateKey( const String& key, String& out );
+        virtual const String  getStatusWebpage();
+        virtual void          resolveTemplateKey( const String& key, String& out );
     protected:
         virtual bool          handleCommand( const String& cmd, const String& args );
+        ResultData            handleOption( const String& key, const String& value, Options::Action action );
   };

@@ -13,6 +13,8 @@
 IrNeoclima::IrNeoclima() {
    // pinMode( TRANSMITTER_PIN, OUTPUT );
     properties.has_module_webpage = true;
+    properties.has_status_webpage = true;
+    
     airConditional = new IRNeoclimaAc( TRANSMITTER_PIN );
     airConditional->begin();
 
@@ -28,6 +30,12 @@ IrNeoclima::~IrNeoclima(){
 const String IrNeoclima::getModuleWebpage() {
   return makeWebpage( "/module_ir_ac.html" );
 }
+
+const String IrNeoclima::getStatusWebpage() {
+  return makeWebpage( "/status_ir_ac.html" );
+}
+
+
 
 bool IrNeoclima::handleCommand( const String& cmd, const String& args ){
      SWITCH( cmd.c_str() ) {
@@ -106,8 +114,26 @@ void IrNeoclima::resolveTemplateKey( const String& key, String& out ) {
     CASE( "MTITLE" ):  {
         out += Utils::formatModuleSettingsTitle( getId(), getName() );  break;
     }  
-    CASE( "PIN_NUM" ): {
-        out += TRANSMITTER_PIN; break;
-    } 
+    CASE( "PIN" ): {
+        out += getByteOption( PIN_OPTION_KEY, TRANSMITTER_PIN );      break;
+    }
   }
 }
+
+
+ResultData IrNeoclima::handleOption( const String& key, const String& value, Options::Action action ) {
+    SWITCH( key.c_str() ) {
+        // ==========================================
+        CASE( "pin" ): {
+            if( action == Options::VERIFY ) {
+                uint8_t pin = Utils::toByte( value.c_str() );
+                Log.notice( "Value %s" CR, value );
+                if( pin < 1 || pin > 39 ) return INVALID_VALUE;
+            }
+            return handleByteOption( PIN_OPTION_KEY, value, action, false );
+        }
+        // ==========================================
+        DEFAULT_CASE:
+            return UNKNOWN_OPTION;
+    }
+};
