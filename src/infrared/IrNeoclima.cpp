@@ -9,6 +9,7 @@
 #include "infrared/IrNeoclima.h"
 #include "str_switch.h"
 #include "Utils.h"
+#include "Events.h"
 
 IrNeoclima::IrNeoclima() {
    // pinMode( TRANSMITTER_PIN, OUTPUT );
@@ -34,8 +35,6 @@ const String IrNeoclima::getModuleWebpage() {
 const String IrNeoclima::getStatusWebpage() {
   return makeWebpage( "/status_ir_ac.html" );
 }
-
-
 
 bool IrNeoclima::handleCommand( const String& cmd, const String& args ){
      SWITCH( cmd.c_str() ) {
@@ -92,7 +91,7 @@ bool IrNeoclima::handleCommand( const String& cmd, const String& args ){
         }
         CASE( "temp" ): {
             uint8_t number = Utils::toByte( args.c_str() );
-            if( number <= 15 || number >= 30 ) {
+            if( number < 14 || number > 31 ) {
                 handleCommandResults( cmd, args, Messages::COMMAND_INVALID_VALUE );
             } else {
                 airConditional->setTemp(number);
@@ -118,7 +117,7 @@ void IrNeoclima::resolveTemplateKey( const String& key, String& out ) {
         out += getByteOption( PIN_OPTION_KEY, TRANSMITTER_PIN );      break;
     }
   }
-}
+};
 
 
 ResultData IrNeoclima::handleOption( const String& key, const String& value, Options::Action action ) {
@@ -127,7 +126,6 @@ ResultData IrNeoclima::handleOption( const String& key, const String& value, Opt
         CASE( "pin" ): {
             if( action == Options::VERIFY ) {
                 uint8_t pin = Utils::toByte( value.c_str() );
-                Log.notice( "Value %s" CR, value );
                 if( pin < 1 || pin > 39 ) return INVALID_VALUE;
             }
             return handleByteOption( PIN_OPTION_KEY, value, action, false );

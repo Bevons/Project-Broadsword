@@ -7,6 +7,7 @@ class IrNeoclima : public Module {
         const uint8_t                       TRANSMITTER_PIN = LED_BUILTIN;
         static constexpr const char* const  PIN_OPTION_KEY  = "Pin";
         IRNeoclimaAc*                       airConditional;
+
     public:
         IrNeoclima();
         virtual ~IrNeoclima();
@@ -15,7 +16,7 @@ class IrNeoclima : public Module {
         virtual const char*   getName()  { return Messages::TITLE_NEOCLIMA_MODULE; }
         virtual const String  getModuleWebpage();
         virtual const String  getStatusWebpage();
-        virtual void          resolveTemplateKey( const String& key, String& out );
+        void                  resolveTemplateKey( const String& key, String& out );
     protected:
         virtual bool          handleCommand( const String& cmd, const String& args );
         ResultData            handleOption( const String& key, const String& value, Options::Action action );

@@ -2,23 +2,45 @@
 <div class="card-header bg-primary text-light text-center">%MTITLE%</div>
 <div class="card-body text-center">
     <div class = "row">
-        
-        <div class="col-6">
-            <button id="settings_submit" class="btn btn-outline-primary sizeForButton">Heat mode</button>    
+        <div class="col mt-1">
+            <button class="btn btn-outline-primary sizeForButton" role="button" onclick="onAcHeatClick()">HEAT</button>    
         </div>
-        <div class="col-6">
-            <button id="settings_submit" class="btn btn-outline-primary sizeForButton">Cool mode</button>    
+        <div class="col mt-1">
+            <button id="settings_submit" class="btn btn-outline-primary sizeForButton" role="button" onclick="onAcCoolClick()">COOL</button>    
         </div>
         
 
     </div>
     <div class="row block2">
 
-        <div class="col-6">
-            <button id="settings_submit" class="btn btn-outline-primary sizeForButton">Power off</button>    
+        <div class="col mt-1">
+            <button id="settings_submit" class="btn btn-outline-primary sizeForButton" role="button" onclick="onAcOffClick()">OFF</button>    
         </div>
-        <div class="col-6">
-            <button id="settings_submit" class="btn btn-outline-primary sizeForButton">Submit</button>   
+        <div class="col mt-1">
+            <div class="btn-group">
+                
+                <button type="button" class="btn btn-outline-primary dropdown-toggle sizeForButton" data-toggle="dropdown" onclick="onAcTempClick()">
+                  TEMP : <span class="selection"></span><span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu bg-primary " role="menu">
+                  <li><a class="text-light" href="#">15</a></li>
+                  <li><a class="text-light" href="#">16</a></li>
+                  <li><a class="text-light" href="#">17</a></li>
+                  <li><a class="text-light" href="#">18</a></li>
+                  <li><a class="text-light" href="#">19</a></li>
+                  <li><a class="text-light" href="#">20</a></li>
+                  <li><a class="text-light" href="#">21</a></li>
+                  <li><a class="text-light" href="#">22</a></li>
+                  <li><a class="text-light" href="#">23</a></li>
+                  <li><a class="text-light" href="#">24</a></li>
+                  <li><a class="text-light" href="#">25</a></li>
+                  <li><a class="text-light" href="#">26</a></li>
+                  <li><a class="text-light" href="#">27</a></li>
+                  <li><a class="text-light" href="#">28</a></li>
+                  <li><a class="text-light" href="#">29</a></li>
+                  <li><a class="text-light" href="#">30</a></li>
+                </ul>
+              </div>
         </div>
         
     </div>
@@ -28,8 +50,43 @@
     }
     .sizeForButton{
         height: 40px;
-        width: 110px;
+        width: 120px;
         margin-left: 0px;
     }
     </style>
 </div>
+<script>
+    function onAcHeatClick(){
+      var msg = new Object();
+      msg.type = "cmd";
+      msg.payload = "neoclima " + "mode" + " heat";
+      if(webSocket !== null) webSocket.send(JSON.stringify(msg));
+    }
+
+    function onAcCoolClick(){
+      var msg = new Object();
+      msg.type = "cmd";
+      msg.payload = "neoclima " + "mode" + " cool";
+      if(webSocket !== null) webSocket.send(JSON.stringify(msg));
+    }
+
+    function onAcOffClick(){
+      var msg = new Object();
+      msg.type = "cmd";
+      msg.payload = "neoclima " + "fan" + " off";
+      if(webSocket !== null) webSocket.send(JSON.stringify(msg));
+    }
+
+    function onAcTempClick(){
+      $(".dropdown-menu li a").click(function(){
+      $(this).parents(".btn-group").find('.selection').text($(this).text());
+      $(this).parents(".btn-group").find('.selection').val($(this).text());
+      var x = ($(this).text());
+      var msg = new Object();
+      msg.type = "cmd";
+      msg.payload = "neoclima " + "temp " + x;
+      if(webSocket !== null) webSocket.send(JSON.stringify(msg));
+      });
+    }
+    function initModule(){}
+</script>
