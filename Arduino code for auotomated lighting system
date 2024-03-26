@@ -1,0 +1,83 @@
+#define PIR_SENSOR_PIN 2  // Digital pin connected to PIR sensor output
+#define RELAY_PIN 3        // Digital pin connected to relay control pin
+#define LED_PIN 13         // Digital pin connected to LED (optional)
+#define SEGMENT_A_PIN 4     // Digital pin connected to segment a of display
+#define SEGMENT_B_PIN 5     // Digital pin connected to segment b of display
+#define SEGMENT_C_PIN 6     // Digital pin connected to segment c of display
+#define SEGMENT_D_PIN 7     // Digital pin connected to segment d of display
+#define SEGMENT_E_PIN 8     // Digital pin connected to segment e of display
+#define SEGMENT_F_PIN 9     // Digital pin connected to segment f of display
+#define SEGMENT_G_PIN 10    // Digital pin connected to segment g of display
+#define COMMON_CATHODE_PIN GND  // Pin connected to the common cathode of display
+#define SEGMENT_RESISTOR 1000 // Resistor value (in ohms) for each segment
+
+const int digitValues[] = { // Array to map counter value to display pattern
+  0x3F, // 0
+  0x06, // 1
+  0x5B, // 2
+  0x4F, // 3
+  0x66, // 4
+  0x6D, // 5
+  0x7D, // 6
+  0x07, // 7
+  0x7F, // 8
+  0x6F  // 9
+};
+
+int counter = 0;  // Variable to store the people count
+int pirState = LOW; // Current state of the PIR sensor
+int prevPirState = LOW; // Previous state of the PIR sensor
+
+void setup() {
+  pinMode(PIR_SENSOR_PIN, INPUT);
+  pinMode(RELAY_PIN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT); // Set LED pin as output (optional)
+
+  // Set segment pins as outputs
+  pinMode(SEGMENT_A_PIN, OUTPUT);
+  pinMode(SEGMENT_B_PIN, OUTPUT);
+  pinMode(SEGMENT_C_PIN, OUTPUT);
+  pinMode(SEGMENT_D_PIN, OUTPUT);
+  pinMode(SEGMENT_E_PIN, OUTPUT);
+  pinMode(SEGMENT_F_PIN, OUTPUT);
+  pinMode(SEGMENT_G_PIN, OUTPUT);
+
+  // Set common cathode pin as output
+  pinMode(COMMON_CATHODE_PIN, OUTPUT);
+  digitalWrite(COMMON_CATHODE_PIN, LOW); // Turn on common cathode
+
+  // Set resistors for each segment (optional, adjust if needed)
+  for (int i = SEGMENT_A_PIN; i <= SEGMENT_G_PIN; i++) {
+    pinMode(i, OUTPUT);
+    digitalWrite(i, HIGH);
+  }
+}
+
+void loop() {
+  pirState = digitalRead(PIR_SENSOR_PIN);
+
+  if (pirState == HIGH && prevPirState == LOW) {
+    counter++;  // Increment counter when motion detected
+    digitalWrite(LED_PIN, HIGH); // Turn on LED (optional)
+  } else if (pirState == LOW && prevPirState == HIGH) {
+    counter--;  // Decrement counter after a delay without motion
+    if (counter < 0) {
+      counter = 0; // Prevent negative counter value
+    }
+    digitalWrite(LED_PIN, LOW); // Turn off LED (optional)
+  }
+
+  displayNumber(counter);  // Display the current counter on the seven-segment display
+
+  prevPirState = pirState;  // Update previous state
+  delay(500);  // Delay to avoid rapid counting
+}
+
+void displayNumber(int number) {
+  digitalWrite(COMMON_CATHODE_PIN, HIGH); // Turn off common cathode to display a digit
+  for (int i = 0; i < 8; i++) {
+    digitalWrite(i + SEGMENT_A_PIN, (digitValues[number] >> i) & 0x01 ? LOW : HIGH);
+  }
+  delay(2); // Short delay for digit visibility
+  digitalWrite(COMMON_CATHODE_PIN, LOW); // Turn on common cathode
+}
